@@ -34,13 +34,6 @@ services:
       - { name: kernel.event_listener, event: sylius.product_variant.post_update, method: sendNotifierVariant }
       - { name: kernel.event_listener, event: sylius.product.post_update, method: sendNotifierProduct }
 
-  workouse_availability_notifier_plugin.block_event_listener.shop.layout.javascripts:
-    class: Sylius\Bundle\UiBundle\Block\BlockEventListener
-    arguments:
-      - "@@WorkouseAvailabilityNotifierPlugin/Resources/views/_javascripts.html.twig"
-    tags:
-      - { name: kernel.event_listener, event: sonata.block.event.sylius.shop.layout.javascripts, method: onBlockEvent }
-
   workouse_availability_notifier_plugin.listener.admin.product.form.menu_builder:
     class: Workouse\AvailabilityNotifierPlugin\Menu\AdminProductFormMenuListener
     tags:

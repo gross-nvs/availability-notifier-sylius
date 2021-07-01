@@ -13,3 +13,11 @@ sylius_mailer:
     product_stock_notifier:
       subject: "Product stock notifier"
       template: "@WorkouseAvailabilityNotifierPlugin/Email/productStockNotifier.html.twig"
+
+sylius_ui:
+  events:
+    sylius.shop.layout.javascripts:
+      blocks:
+        workouse_availability_notifier_plugin:
+          template: "@WorkouseAvailabilityNotifierPlugin/Resources/views/_javascripts.html.twig"
+          priority: 10
