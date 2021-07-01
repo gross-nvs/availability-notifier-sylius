@@ -10,7 +10,6 @@ use Sylius\Component\Core\Repository\CustomerRepositoryInterface;
 use Sylius\Component\Core\Repository\ProductRepositoryInterface;
 use Sylius\Component\Customer\Model\Customer;
 use Sylius\Component\Resource\Factory\FactoryInterface;
-use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +19,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Twig\Environment;
 use Workouse\AvailabilityNotifierPlugin\Entity\AvailabilityNotifier;
 use Workouse\AvailabilityNotifierPlugin\Entity\AvailabilityNotifierInterface;
 use Workouse\AvailabilityNotifierPlugin\Form\Type\AvailabilityNotifierType;
@@ -58,7 +58,7 @@ class AvailabilityNotifierController
     private $validator;
 
     public function __construct(
-        TwigEngine $templatingEngine,
+        Environment $templatingEngine,
         FormFactoryInterface $formFactory,
         CustomerRepositoryInterface $customerRepository,
         FactoryInterface $customerFactory,
@@ -85,10 +85,13 @@ class AvailabilityNotifierController
     {
         $form = $this->formFactory->create(AvailabilityNotifierType::class);
 
-        return $this->templatingEngine->renderResponse(
-            '@WorkouseAvailabilityNotifierPlugin/_outOfStock.html.twig',
-            ['form' => $form->createView(), 'productId' => $productId]
-        );
+        $response = new Response();
+        $response->setContent($this->templatingEngine->render(
+                '@WorkouseAvailabilityNotifierPlugin/_outOfStock.html.twig',
+                ['form' => $form->createView(), 'productId' => $productId]
+            ));
+
+        return $response;
     }
 
     public function newAction(Request $request, $productId): Response
@@ -175,12 +178,15 @@ class AvailabilityNotifierController
             'status' => false,
         ]));
 
-        return $this->templatingEngine->renderResponse(
-            '@WorkouseAvailabilityNotifierPlugin/Admin/_waiting_customers.html.twig',
-            [
-                'availabilityNotifiers' => $availabilityNotifiers,
-                'availabilityNotifiersTotal' => $availabilityNotifiersTotal,
-            ]
-        );
+        $response = new Response();
+        $response->setContent($this->templatingEngine->render(
+                '@WorkouseAvailabilityNotifierPlugin/Admin/_waiting_customers.html.twig',
+                [
+                    'availabilityNotifiers' => $availabilityNotifiers,
+                    'availabilityNotifiersTotal' => $availabilityNotifiersTotal,
+                ]
+            ));
+
+        return $response;
     }
 }

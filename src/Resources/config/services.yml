@@ -3,7 +3,7 @@ services:
     class: Workouse\AvailabilityNotifierPlugin\Controller\AvailabilityNotifierController
     public: true
     arguments:
-      - '@templating'
+      - '@twig'
       - '@form.factory'
       - '@sylius.repository.customer'
       - '@sylius.factory.customer'

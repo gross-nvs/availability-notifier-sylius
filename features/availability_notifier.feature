@@ -16,6 +16,6 @@ Feature: Availability Notifier
   Scenario: Notify Me When Available
     Given the product "Angel T-Shirt" is out of stock
     When I check this product's details
-    And I fill the Email with "omer@eresbiotech.com"
+    And I fill the Email with "gross@novius.fr"
     And Press Email Me
     Then I should be notified that the notify has been added
