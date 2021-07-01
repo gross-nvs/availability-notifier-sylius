@@ -19,5 +19,5 @@ sylius_ui:
     sylius.shop.layout.javascripts:
       blocks:
         workouse_availability_notifier_plugin:
-          template: "@WorkouseAvailabilityNotifierPlugin/Resources/views/_javascripts.html.twig"
+          template: "@WorkouseAvailabilityNotifierPlugin/_javascripts.html.twig"
           priority: 10
